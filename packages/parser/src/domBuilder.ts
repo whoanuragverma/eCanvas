@@ -3,7 +3,8 @@ import { Component } from "@repo/schema/component";
 export default function domBuilder(
   component: Component,
   document: Document,
-  hooksData: Record<string, object>
+  hooksData: Record<string, object>,
+  debug: boolean
 ): HTMLElement {
   const baseElement = document.createElement(component.element);
 
@@ -19,20 +20,18 @@ export default function domBuilder(
   }
 
   if (component.element === "img") {
-    (baseElement as HTMLImageElement).src = component.eval
-      ? eval(component.src)
-      : component.src;
+    (baseElement as HTMLImageElement).src =
+      component.eval && !debug ? eval(component.src) : component.src;
   }
 
   if (component.element === "span") {
-    (baseElement as HTMLSpanElement).innerHTML = component.eval
-      ? eval(component.text)
-      : component.text;
+    (baseElement as HTMLSpanElement).innerHTML =
+      component.eval && !debug ? eval(component.text) : component.text;
   }
 
   if (component.element === "div" && component.children) {
     for (let children of component.children) {
-      const childComponent = domBuilder(children, document, hooksData);
+      const childComponent = domBuilder(children, document, hooksData, debug);
       baseElement.appendChild(childComponent);
     }
   }

@@ -30,4 +30,8 @@ export interface Widget {
    * The HTML to render for the widget.
    */
   component: Component;
+  /**
+   * Hooks will not be run in debug mode and all evals will be disabled.
+   */
+  debug?: boolean;
 }
