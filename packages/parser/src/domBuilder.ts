@@ -14,6 +14,10 @@ export default function domBuilder(
     });
   }
 
+  if (component.className) {
+    baseElement.className = component.className;
+  }
+
   if (component.element === "img") {
     (baseElement as HTMLImageElement).src = component.eval
       ? eval(component.src)

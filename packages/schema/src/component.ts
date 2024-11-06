@@ -3,6 +3,10 @@ export type Component = {
    * The CSS to apply to the component.
    */
   style?: Record<string, string>;
+  /**
+   * Tailwind CSS classes to apply to the component.
+   */
+  className?: string;
 } & (ImgComponent | DivComponent | SpanComponent);
 
 type ImgComponent = {
