@@ -11,8 +11,7 @@ export const defaultWidget = `{
         "children": [
             {
                 "element": "span",
-                "text": "Widget!",
-                "eval": false
+                "text": "Widget!"
             }
         ]
     }

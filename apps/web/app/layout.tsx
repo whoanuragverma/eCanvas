@@ -19,7 +19,7 @@ export default function RootLayout({
           <Link href="/" className="">
             Library
           </Link>
-          <Link href="/">Create Widget</Link>
+          <Link href="/create">Create Widget</Link>
         </header>
         <div>{children}</div>
       </body>

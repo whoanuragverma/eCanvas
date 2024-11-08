@@ -45,7 +45,7 @@ export default function WidgetRenderer({ text }: WidgetRendererProps) {
               height={"40vh"}
               width={"50vw"}
               theme="vs-dark"
-              value={htmlResponse?.data[1]}
+              value={htmlResponse?.success ? htmlResponse?.data[1] : "Error"}
               options={{
                 readOnly: true,
                 lineNumbers: "off",

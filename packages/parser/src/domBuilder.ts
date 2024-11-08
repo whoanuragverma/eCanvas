@@ -7,6 +7,10 @@ export default function domBuilder(
   debug: boolean
 ): HTMLElement {
   const baseElement = document.createElement(component.element);
+  const applyEval = (str: string) => {
+    console.log(str);
+    return str.replace(/{{(.*?)}}/g, (_, match) => eval(match));
+  };
 
   if (component.style) {
     Object.entries(component.style).forEach(([key, value]) => {
@@ -20,13 +24,11 @@ export default function domBuilder(
   }
 
   if (component.element === "img") {
-    (baseElement as HTMLImageElement).src =
-      component.eval && !debug ? eval(component.src) : component.src;
+    (baseElement as HTMLImageElement).src = applyEval(component.src);
   }
 
   if (component.element === "span") {
-    (baseElement as HTMLSpanElement).innerHTML =
-      component.eval && !debug ? eval(component.text) : component.text;
+    (baseElement as HTMLSpanElement).innerHTML = applyEval(component.text);
   }
 
   if (component.element === "div" && component.children) {

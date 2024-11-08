@@ -16,7 +16,7 @@ export async function POST(request: Request): Promise<Response> {
         success: true,
         data: [
           html[0],
-          html_beautify(`<body>${html[1]}</body>`, {
+          html_beautify(html[1]!, {
             indent_size: 1,
             indent_char: "\t",
             wrap_line_length: 40,
@@ -31,7 +31,9 @@ export async function POST(request: Request): Promise<Response> {
     return new Response(
       JSON.stringify({
         success: false,
-        data: `<h2>${(error as Error).message}</h2><br/><em>${(error as Error).stack}</em>`,
+        data: [
+          `<h2>${(error as Error).message}</h2><br/><em>${(error as Error).stack}</em>`,
+        ],
       }),
       {
         headers: { "Content-Type": "application/json" },

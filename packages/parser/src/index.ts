@@ -21,5 +21,8 @@ export async function widgetParser(widget: Widget): Promise<string[]> {
   const styleElement = document.createElement("style");
   styleElement.innerHTML = styles;
 
-  return [styleElement.outerHTML + domElement.outerHTML, domElement.outerHTML];
+  return [
+    styleElement.outerHTML + domElement.outerHTML,
+    `<body>${domElement.outerHTML}<script>const hooksData = ${JSON.stringify(hooksData)}</script></body>`,
+  ];
 }
