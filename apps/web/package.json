@@ -11,6 +11,7 @@
   "dependencies": {
     "@monaco-editor/react": "^4.6.0",
     "@repo/parser": "*",
+    "@repo/schema": "*",
     "js-beautify": "^1.15.1",
     "next": "14.2.6",
     "react": "18.3.1",
