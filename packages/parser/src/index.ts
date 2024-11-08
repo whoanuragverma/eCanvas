@@ -5,7 +5,7 @@ import domBuilder from "./domBuilder";
 import processStyles from "./processStyles";
 const window = new JSDOM(`<!DOCTYPE html></html>`).window;
 
-export async function widgetParser(widget: Widget): Promise<string> {
+export async function widgetParser(widget: Widget): Promise<string[]> {
   const document = window.document;
   const { hooks, component, debug } = widget;
   const hooksData: Record<string, Object> = {}; // Cache for hooks data
@@ -21,5 +21,5 @@ export async function widgetParser(widget: Widget): Promise<string> {
   const styleElement = document.createElement("style");
   styleElement.innerHTML = styles;
 
-  return styleElement.outerHTML + domElement.outerHTML;
+  return [styleElement.outerHTML + domElement.outerHTML, domElement.outerHTML];
 }
