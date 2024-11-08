@@ -9,6 +9,7 @@ async function generateStyles(className: string): Promise<string> {
   const result = await postcss([
     tailwindcss({
       content: [{ raw: content, extension: "html" }],
+      corePlugins: { preflight: false },
     }),
     autoprefixer,
   ]).process("@tailwind base;@tailwind components;@tailwind utilities;", {
