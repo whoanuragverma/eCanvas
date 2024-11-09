@@ -1,40 +1,14 @@
 /* eslint-disable turbo/no-undeclared-env-vars */
 import "./globals.css";
-import { filterStandardClaims } from "next-firebase-auth-edge/lib/auth/claims";
-import { Tokens, getTokens } from "next-firebase-auth-edge";
+import { getTokens } from "next-firebase-auth-edge";
 import { cookies } from "next/headers";
-import { User } from "../component/AuthContext";
 import { AuthProvider } from "../component/AuthProvider";
 import { Metadata } from "next";
 import Header from "../component/Header";
+import { toUser } from "../utils/toUser";
 
 export const metadata: Metadata = {
   title: "eCanvas",
-};
-
-const toUser = ({ decodedToken }: Tokens): User => {
-  const {
-    uid,
-    email,
-    picture: photoURL,
-    email_verified: emailVerified,
-    phone_number: phoneNumber,
-    name: displayName,
-    source_sign_in_provider: signInProvider,
-  } = decodedToken;
-
-  const customClaims = filterStandardClaims(decodedToken);
-
-  return {
-    uid,
-    email: email ?? null,
-    displayName: displayName ?? null,
-    photoURL: photoURL ?? null,
-    phoneNumber: phoneNumber ?? null,
-    emailVerified: emailVerified ?? false,
-    providerId: signInProvider,
-    customClaims,
-  };
 };
 
 export default async function RootLayout({

@@ -1,14 +1,24 @@
+"use client";
 import { useEffect, useState } from "react";
 import { ApiResponse } from "../app/api/route";
 import { Editor } from "@monaco-editor/react";
+import { db } from "../app/firebase";
+import saveWidget from "../firestore/saveWidget";
+import { useAuth } from "./AuthContext";
 
 interface WidgetRendererProps {
   text?: string;
 }
-
+enum SaveStatus {
+  notSaved = "Save",
+  saving = "Saving",
+  saved = "Saved",
+}
 export default function WidgetRenderer({ text }: WidgetRendererProps) {
   const [htmlResponse, setHtmlResponse] = useState<ApiResponse | undefined>();
   const [debug, setDebug] = useState<boolean>(false);
+  const [isSaving, setIsSaving] = useState<SaveStatus>(SaveStatus.notSaved);
+  const auth = useAuth();
   useEffect(() => {
     async function fetchHtml() {
       const response = await fetch("/api", {
@@ -24,17 +34,33 @@ export default function WidgetRenderer({ text }: WidgetRendererProps) {
       setHtmlResponse(html);
     }
 
-    fetchHtml();
+    if (text) fetchHtml();
   }, [text]);
+
+  const onSave = async () => {
+    setIsSaving(SaveStatus.saving);
+    await saveWidget(db, auth.user, {
+      ...JSON.parse(text!),
+      preview: htmlResponse?.data[0],
+    });
+    setIsSaving(SaveStatus.saved);
+    setTimeout(() => setIsSaving(SaveStatus.notSaved), 5000);
+  };
 
   return (
     <>
-      <div className="absolute bottom-10 right-10">
+      <div className="absolute bottom-10 right-10 flex gap-4">
         <span
           onClick={() => setDebug(!debug)}
           className={`cursor-pointer px-4 py-2 ${debug ? "bg-blue-500" : "bg-slate-500"} rounded-full select-none`}
         >
           Debug
+        </span>
+        <span
+          onClick={onSave}
+          className={`cursor-pointer px-4 py-2 bg-blue-600 rounded-full select-none`}
+        >
+          {isSaving}
         </span>
       </div>
       <div className="grid grid-rows-10  gap-4 place-items-center w-[50%] h-[calc(100vh_-_56px)]">

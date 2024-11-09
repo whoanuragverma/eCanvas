@@ -1,3 +1,4 @@
+"use client";
 import Editor, { useMonaco } from "@monaco-editor/react";
 import React, { useEffect } from "react";
 import Schema from "@repo/schema/json";
