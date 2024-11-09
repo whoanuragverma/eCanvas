@@ -8,7 +8,6 @@ export default function domBuilder(
 ): HTMLElement {
   const baseElement = document.createElement(component.element);
   const applyEval = (str: string) => {
-    console.log(str);
     return str.replace(/{{(.*?)}}/g, (_, match) => eval(match));
   };
 
