@@ -1,8 +1,20 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  serverExternalPackages: ["@sparticuz/chromium", "playwright-core"],
   experimental: {
     serverComponentsExternalPackages: ["@sparticuz/chromium", "playwright-core"],
+  },
+  webpack: (config, { isServer }) => {
+    if (isServer) {
+      const externals = Array.isArray(config.externals)
+        ? config.externals
+        : config.externals
+          ? [config.externals]
+          : [];
+
+      config.externals = [...externals, "@sparticuz/chromium", "playwright-core"];
+    }
+
+    return config;
   },
 };
 
