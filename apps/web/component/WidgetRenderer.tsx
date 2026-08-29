@@ -124,7 +124,7 @@ export default function WidgetRenderer({ text }: WidgetRendererProps) {
         )}
         <div className="w-full h-full flex items-center justify-center p-6 overflow-auto min-w-0">
           <div
-            className={`${debug ? "row-span-5" : "row-span-10"} inline-block max-w-full min-w-0`}
+            className={`${debug ? "row-span-5" : "row-span-10"} contents max-w-full min-w-0 contents`}
             dangerouslySetInnerHTML={{ __html: previewMarkup }}
           />
         </div>

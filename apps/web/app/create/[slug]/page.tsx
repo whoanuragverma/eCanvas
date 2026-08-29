@@ -15,10 +15,14 @@ export default function Home() {
     if (slug) {
       getWidget(db, auth.user, slug.toString()).then((widget) => {
         setText(
-          JSON.stringify({
-            ...widget,
-            preview: undefined,
-          })
+          JSON.stringify(
+            {
+              ...widget,
+              preview: undefined,
+            },
+            null,
+            2
+          )
         );
       });
     }
