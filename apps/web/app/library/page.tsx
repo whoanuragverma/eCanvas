@@ -3,8 +3,6 @@ import { toUser } from "../../utils/toUser";
 import { cookies } from "next/headers";
 import { adminApp } from "../firebaseAdmin";
 import getAllWidgets from "../../firestore/getAllWidgets";
-import Link from "next/link";
-import deleteWidget from "../../firestore/deleteWidget";
 import Widget from "../../component/Widget";
 export default async function Library() {
   const tokens = await getTokens(await cookies(), {

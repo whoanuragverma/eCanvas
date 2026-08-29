@@ -1,9 +1,9 @@
-import { Firestore, doc, setDoc } from "firebase/firestore";
+import { doc, setDoc } from "firebase/firestore";
 import { User } from "../component/AuthContext";
 import { FirestoreWidget } from "./types";
 
 export default async function saveWidget(
-  db: Firestore,
+  db: any,
   user: User | null,
   widget: FirestoreWidget
 ) {

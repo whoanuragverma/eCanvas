@@ -1,8 +1,13 @@
 import { createContext, useContext } from "react";
-import { UserInfo } from "firebase/auth";
-import { Claims } from "next-firebase-auth-edge/lib/auth/claims";
+import type { Claims } from "next-firebase-auth-edge/lib/auth/claims";
 
-export interface User extends UserInfo {
+export interface User {
+  uid: string;
+  email: string | null;
+  displayName: string | null;
+  photoURL: string | null;
+  phoneNumber: string | null;
+  providerId: string;
   emailVerified: boolean;
   customClaims: Claims;
 }

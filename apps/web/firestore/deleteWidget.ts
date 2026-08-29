@@ -1,8 +1,8 @@
-import { Firestore, deleteDoc, doc, getDoc } from "firebase/firestore";
+import { deleteDoc, doc } from "firebase/firestore";
 import { User } from "../component/AuthContext";
 
 export default async function deleteWidget(
-  db: Firestore,
+  db: any,
   user: User | null,
   name: string
 ) {

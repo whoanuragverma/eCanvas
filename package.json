@@ -14,11 +14,14 @@
     "typescript": "5.5.4"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=24"
   },
   "packageManager": "npm@9.5.1",
   "workspaces": [
     "apps/*",
     "packages/*"
-  ]
+  ],
+  "dependencies": {
+    "playwright": "^1.62.1"
+  }
 }

@@ -2,7 +2,7 @@ import { FirestoreWidget } from "./types";
 import { User } from "../component/AuthContext";
 
 export default async function getAllWidgets(
-  db: FirebaseFirestore.Firestore,
+  db: any,
   user: User | null
 ) {
   const widgetsRef = db.collection(user?.uid!);
@@ -10,7 +10,7 @@ export default async function getAllWidgets(
 
   const widgets: FirestoreWidget[] = [];
 
-  snapshot.forEach((doc) => {
+  snapshot.forEach((doc: any) => {
     widgets.push(doc.data() as FirestoreWidget);
   });
 
