@@ -1,9 +1,8 @@
 import { widgetParser } from "@repo/parser";
 import { html as html_beautify } from "js-beautify";
 import { Widget } from "@repo/schema";
-import chromium from "@sparticuz/chromium";
-import { chromium as playwrightChromium } from "playwright-core";
 
+export const runtime = "nodejs";
 export const maxDuration = 60;
 
 export interface ApiResponse {
@@ -73,8 +72,11 @@ async function renderPng(
   width = 800,
   height = 600
 ): Promise<Buffer> {
+  const chromium = (await import("@sparticuz/chromium")).default;
+  const { chromium: playwrightChromium } = await import("playwright-core");
+
   const browser = await playwrightChromium.launch({
-    headless: chromium.headless,
+    headless: true,
     args: chromium.args,
     executablePath: await chromium.executablePath(),
   });

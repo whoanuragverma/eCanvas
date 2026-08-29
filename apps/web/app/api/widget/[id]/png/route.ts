@@ -1,9 +1,8 @@
 import { widgetParser } from "@repo/parser";
-import chromium from "@sparticuz/chromium";
-import { chromium as playwrightChromium } from "playwright-core";
 import { validateApiKey } from "../../../../../lib/apiKeys";
 import { adminApp } from "../../../../firebaseAdmin";
 
+export const runtime = "nodejs";
 export const maxDuration = 60;
 
 async function getWidget(ownerUid: string, id: string) {
@@ -18,8 +17,11 @@ async function getWidget(ownerUid: string, id: string) {
 }
 
 async function renderPng(markup: string, width = 800, height = 600) {
+  const chromium = (await import("@sparticuz/chromium")).default;
+  const { chromium: playwrightChromium } = await import("playwright-core");
+
   const browser = await playwrightChromium.launch({
-    headless: chromium.headless,
+    headless: true,
     args: chromium.args,
     executablePath: await chromium.executablePath(),
   });
