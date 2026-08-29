@@ -2,6 +2,9 @@
 const nextConfig = {
   experimental: {
     serverComponentsExternalPackages: ["@sparticuz/chromium", "playwright-core"],
+    outputFileTracingIncludes: {
+      "/api/widget/*/png": ["./node_modules/@sparticuz/chromium/bin/**"],
+    },
   },
   webpack: (config, { isServer }) => {
     if (isServer) {
