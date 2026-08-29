@@ -2,7 +2,6 @@ import { widgetParser } from "@repo/parser";
 import { html as html_beautify } from "js-beautify";
 import { Widget } from "@repo/schema";
 import { chromium } from "playwright";
-import { validateApiKey } from "../../lib/apiKeys";
 
 export interface ApiResponse {
   success: boolean;
@@ -98,16 +97,28 @@ async function renderPng(
 }
 
 export async function GET(request: Request): Promise<Response> {
-  try {
-    await validateApiKey(request);
-  } catch (error) {
-    return new Response(
-      JSON.stringify({
-        success: false,
-        error: (error as Error).message,
-      }),
-      { status: 401, headers: { "Content-Type": "application/json" } }
-    );
+  const headers = request.headers;
+  const authHeader = headers.get("authorization");
+  const hasKey =
+    !!headers.get("x-api-key") ||
+    !!(authHeader && authHeader.startsWith("Bearer ")) ||
+    !!new URL(request.url).searchParams.get("api_key") ||
+    !!new URL(request.url).searchParams.get("apiKey") ||
+    !!new URL(request.url).searchParams.get("key");
+
+  if (hasKey) {
+    try {
+      const { validateApiKey } = await import("../../lib/apiKeys");
+      await validateApiKey(request);
+    } catch (error) {
+      return new Response(
+        JSON.stringify({
+          success: false,
+          error: (error as Error).message,
+        }),
+        { status: 401, headers: { "Content-Type": "application/json" } }
+      );
+    }
   }
 
   const url = new URL(request.url);
@@ -169,16 +180,28 @@ export async function GET(request: Request): Promise<Response> {
 }
 
 export async function POST(request: Request): Promise<Response> {
-  try {
-    await validateApiKey(request);
-  } catch (error) {
-    return new Response(
-      JSON.stringify({
-        success: false,
-        error: (error as Error).message,
-      }),
-      { status: 401, headers: { "Content-Type": "application/json" } }
-    );
+  const headers = request.headers;
+  const authHeader = headers.get("authorization");
+  const hasKey =
+    !!headers.get("x-api-key") ||
+    !!(authHeader && authHeader.startsWith("Bearer ")) ||
+    !!new URL(request.url).searchParams.get("api_key") ||
+    !!new URL(request.url).searchParams.get("apiKey") ||
+    !!new URL(request.url).searchParams.get("key");
+
+  if (hasKey) {
+    try {
+      const { validateApiKey } = await import("../../lib/apiKeys");
+      await validateApiKey(request);
+    } catch (error) {
+      return new Response(
+        JSON.stringify({
+          success: false,
+          error: (error as Error).message,
+        }),
+        { status: 401, headers: { "Content-Type": "application/json" } }
+      );
+    }
   }
 
   try {

@@ -23,11 +23,23 @@ export default function WidgetRenderer({ text }: WidgetRendererProps) {
 
   useEffect(() => {
     async function fetchHtml() {
+      const headers: Record<string, string> = {
+        "Content-Type": "application/json",
+      };
+
+      const apiKey = typeof window !== "undefined"
+        ? new URLSearchParams(window.location.search).get("api_key") ||
+          new URLSearchParams(window.location.search).get("apiKey") ||
+          new URLSearchParams(window.location.search).get("key")
+        : null;
+
+      if (apiKey) {
+        headers["x-api-key"] = apiKey;
+      }
+
       const response = await fetch("/api", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers,
         body: JSON.stringify(text),
       });
 
