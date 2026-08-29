@@ -103,7 +103,7 @@ export default function WidgetRenderer({ text }: WidgetRendererProps) {
           {isSaving}
         </span>
       </div>
-      <div className="grid grid-rows-10 gap-4 place-items-center w-full h-[calc(100vh_-_56px)] min-w-0">
+      <div className="grid gap-4 place-items-center w-full h-[calc(100vh_-_56px)] min-w-0">
         {debug && (
           <div className="row-span-5 place-self-start w-full min-w-0">
             <Editor
@@ -122,9 +122,9 @@ export default function WidgetRenderer({ text }: WidgetRendererProps) {
             />
           </div>
         )}
-        <div className="w-full h-full flex items-center justify-center p-6 overflow-auto min-w-0">
+        <div className="w-full h-full contents items-center justify-center p-6 overflow-auto min-w-0">
           <div
-            className={`${debug ? "row-span-5" : "row-span-10"} contents max-w-full min-w-0 contents`}
+            className={`${debug ? "row-span-5" : "row-span-10"} contents max-w-full min-w-0`}
             dangerouslySetInnerHTML={{ __html: previewMarkup }}
           />
         </div>

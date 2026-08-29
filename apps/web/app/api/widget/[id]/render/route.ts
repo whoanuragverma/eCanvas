@@ -1,9 +1,12 @@
 import { widgetParser } from "@repo/parser";
 import { html as htmlBeautify } from "js-beautify";
 import { NextResponse } from "next/server";
-import { chromium } from "playwright";
+import chromium from "@sparticuz/chromium";
+import { chromium as playwrightChromium } from "playwright-core";
 import { validateApiKey } from "../../../../../lib/apiKeys";
 import { adminApp } from "../../../../firebaseAdmin";
+
+export const maxDuration = 60;
 
 async function getWidget(ownerUid: string, id: string) {
   const db = adminApp.firestore();
@@ -32,9 +35,10 @@ async function renderWidgetHtml(widget: any) {
 }
 
 async function renderPng(markup: string, width = 800, height = 600) {
-  const browser = await chromium.launch({
-    headless: true,
-    args: ["--no-sandbox", "--disable-dev-shm-usage"],
+  const browser = await playwrightChromium.launch({
+    headless: chromium.headless,
+    args: chromium.args,
+    executablePath: await chromium.executablePath(),
   });
 
   try {

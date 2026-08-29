@@ -1,7 +1,10 @@
 import { widgetParser } from "@repo/parser";
 import { html as html_beautify } from "js-beautify";
 import { Widget } from "@repo/schema";
-import { chromium } from "playwright";
+import chromium from "@sparticuz/chromium";
+import { chromium as playwrightChromium } from "playwright-core";
+
+export const maxDuration = 60;
 
 export interface ApiResponse {
   success: boolean;
@@ -70,9 +73,10 @@ async function renderPng(
   width = 800,
   height = 600
 ): Promise<Buffer> {
-  const browser = await chromium.launch({
-    headless: true,
-    args: ["--no-sandbox", "--disable-dev-shm-usage"],
+  const browser = await playwrightChromium.launch({
+    headless: chromium.headless,
+    args: chromium.args,
+    executablePath: await chromium.executablePath(),
   });
 
   try {

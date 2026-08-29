@@ -5,9 +5,7 @@
     "build": "turbo build",
     "dev": "dotenv -- turbo dev",
     "lint": "turbo lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "postinstall": "playwright install chromium",
-    "vercel-build": "playwright install chromium && turbo build"
+    "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "devDependencies": {
     "dotenv-cli": "^7.4.2",
@@ -24,6 +22,7 @@
     "packages/*"
   ],
   "dependencies": {
-    "playwright": "^1.62.1"
+    "@sparticuz/chromium": "^131.0.0",
+    "playwright-core": "^1.62.1"
   }
 }
