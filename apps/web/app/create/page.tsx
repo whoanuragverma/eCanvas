@@ -8,7 +8,7 @@ export default function Home() {
   const [text, setText] = useState<string | undefined>(defaultWidget);
 
   return (
-    <div className="flex">
+    <div className="flex w-full min-w-0">
       <WidgetEditor text={text} setText={setText} />
       <WidgetRenderer text={text} />
     </div>

@@ -82,8 +82,8 @@ export default function WidgetRenderer({ text }: WidgetRendererProps) {
   };
 
   return (
-    <>
-      <div className="absolute bottom-10 right-10 flex flex-wrap gap-3">
+    <div className="relative w-1/2 min-w-0 flex-shrink-0">
+      <div className="absolute bottom-10 right-10 flex flex-wrap gap-3 z-10">
         <span
           onClick={onCopyApi}
           className="cursor-pointer px-4 py-2 bg-slate-600 rounded-full select-none hover:bg-slate-500"
@@ -103,9 +103,9 @@ export default function WidgetRenderer({ text }: WidgetRendererProps) {
           {isSaving}
         </span>
       </div>
-      <div className="grid grid-rows-10 gap-4 place-items-center w-[50%] h-[calc(100vh_-_56px)]">
+      <div className="grid grid-rows-10 gap-4 place-items-center w-full h-[calc(100vh_-_56px)] min-w-0">
         {debug && (
-          <div className="row-span-5 place-self-start">
+          <div className="row-span-5 place-self-start w-full min-w-0">
             <Editor
               defaultLanguage="html"
               height={"40vh"}
@@ -122,13 +122,13 @@ export default function WidgetRenderer({ text }: WidgetRendererProps) {
             />
           </div>
         )}
-        <div className="w-full h-full flex items-center justify-center p-6 overflow-auto">
+        <div className="w-full h-full flex items-center justify-center p-6 overflow-auto min-w-0">
           <div
-            className={debug ? "row-span-5" : "row-span-10"}
+            className={`${debug ? "row-span-5" : "row-span-10"} inline-block max-w-full min-w-0`}
             dangerouslySetInnerHTML={{ __html: previewMarkup }}
           />
         </div>
       </div>
-    </>
+    </div>
   );
 }

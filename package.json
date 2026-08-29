@@ -6,8 +6,8 @@
     "dev": "dotenv -- turbo dev",
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "postinstall": "playwright install --with-deps chromium",
-    "vercel-build": "playwright install --with-deps chromium && turbo build"
+    "postinstall": "playwright install chromium",
+    "vercel-build": "playwright install chromium && turbo build"
   },
   "devDependencies": {
     "dotenv-cli": "^7.4.2",
