@@ -64,11 +64,21 @@ export async function validateApiKey(
   request: Request
 ): Promise<{ key: string; ownerUid: string; name: string }> {
   const headerKey = request.headers.get("x-api-key");
-  const queryKey = new URL(request.url).searchParams.get("api_key");
-  const apiKey = headerKey || queryKey;
+  const authHeader = request.headers.get("authorization");
+  const bearerKey = authHeader?.startsWith("Bearer ")
+    ? authHeader.slice("Bearer ".length).trim()
+    : null;
+
+  const url = new URL(request.url);
+  const queryKey =
+    url.searchParams.get("api_key") ||
+    url.searchParams.get("apiKey") ||
+    url.searchParams.get("key");
+
+  const apiKey = headerKey || bearerKey || queryKey;
 
   if (!apiKey) {
-    throw new Error("Missing x-api-key header.");
+    throw new Error("Missing API key. Send x-api-key header or api_key/apiKey/key query param.");
   }
 
   const db = adminApp.firestore();

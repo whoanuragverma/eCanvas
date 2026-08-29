@@ -83,12 +83,15 @@ async function renderPng(
       isMobile: false,
     });
 
+    const wrappedMarkup = `<div id="eCanvas-root" style="display:inline-block;">${markup}</div>`;
+
     await page.setContent(
-      `<html><body style="margin:0;">${markup}</body></html>`,
+      `<html><body style="margin:0; background:#fff;">${wrappedMarkup}</body></html>`,
       { waitUntil: "networkidle" }
     );
 
-    return Buffer.from(await page.screenshot({ type: "png", fullPage: true }));
+    const root = page.locator("#eCanvas-root");
+    return Buffer.from(await root.screenshot({ type: "png" }));
   } finally {
     await browser.close();
   }

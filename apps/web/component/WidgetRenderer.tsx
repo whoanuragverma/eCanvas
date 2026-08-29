@@ -43,6 +43,11 @@ export default function WidgetRenderer({ text }: WidgetRendererProps) {
     ? `curl -X POST "${typeof window !== "undefined" ? window.location.origin : "http://localhost:3000"}/api" -H "Content-Type: application/json" --data '${text.replace(/'/g, "'\\\"'\\\"'")}'`
     : "";
 
+  const previewMarkup = Array.isArray(htmlResponse?.data) ? htmlResponse.data[0] ?? "" : "";
+  const debugMarkup = htmlResponse?.success && Array.isArray(htmlResponse.data)
+    ? htmlResponse.data[1] ?? ""
+    : "Error";
+
   const onSave = async () => {
     if (!auth.user || !text) {
       return;
@@ -94,7 +99,7 @@ export default function WidgetRenderer({ text }: WidgetRendererProps) {
               height={"40vh"}
               width={"50vw"}
               theme="vs-dark"
-              value={htmlResponse?.success ? htmlResponse?.data[1] : "Error"}
+              value={debugMarkup}
               options={{
                 readOnly: true,
                 lineNumbers: "off",
@@ -108,7 +113,7 @@ export default function WidgetRenderer({ text }: WidgetRendererProps) {
         <div className="w-full h-full flex items-center justify-center p-6 overflow-auto">
           <div
             className={debug ? "row-span-5" : "row-span-10"}
-            dangerouslySetInnerHTML={{ __html: htmlResponse?.data[0]! }}
+            dangerouslySetInnerHTML={{ __html: previewMarkup }}
           />
         </div>
       </div>

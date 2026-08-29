@@ -15,13 +15,18 @@ export default function Home() {
             </p>
             <h1 className="mt-3 text-4xl font-bold text-white">Design widgets and static pages for eInk displays.</h1>
           </div>
-          <div className="flex gap-3">
+          <div className="flex flex-wrap gap-3">
             <Link href="/create" className="rounded-full bg-sky-600 px-5 py-2.5 font-medium text-white transition hover:bg-sky-500">
               Create widget
             </Link>
             <Link href="/library" className="rounded-full border border-slate-600 bg-slate-800 px-5 py-2.5 font-medium text-slate-100 transition hover:border-slate-400">
               Open library
             </Link>
+            {auth.user && (
+              <Link href="/api-keys" className="rounded-full border border-emerald-500/60 bg-emerald-500/10 px-5 py-2.5 font-medium text-emerald-100 transition hover:border-emerald-400 hover:bg-emerald-500/20">
+                API keys
+              </Link>
+            )}
           </div>
         </div>
       </section>
